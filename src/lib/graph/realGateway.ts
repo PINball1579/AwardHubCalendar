@@ -30,7 +30,11 @@ export class RealGateway implements CalendarGateway {
       if (page["@odata.nextLink"]) {
         page = await this.client.api(page["@odata.nextLink"]).get();
       } else {
-        return { events, deltaLink: page["@odata.deltaLink"] };
+        const deltaLink = page["@odata.deltaLink"];
+        if (!deltaLink) {
+          throw new Error("Graph delta response missing @odata.deltaLink");
+        }
+        return { events, deltaLink };
       }
     }
   }
