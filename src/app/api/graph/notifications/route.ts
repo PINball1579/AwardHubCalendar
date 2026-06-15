@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getConfig } from "@/lib/config";
 import { parseNotification } from "@/lib/api/notifications";
 import { runSyncCycle } from "@/lib/sync/runCycle";
+import { triggerSync } from "@/lib/sync/syncRunner";
 
 export async function POST(request: Request) {
   const url = new URL(request.url);
@@ -20,8 +21,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, error: "Invalid notification", data: null }, { status: 202 });
   }
 
-  // A notification only tells us "something changed"; run the delta cycle to
-  // pull authoritative state and propagate it.
-  await runSyncCycle();
+  // A notification only signals "something changed". Trigger the delta sync
+  // WITHOUT awaiting it so we respond within Graph's webhook timeout; the
+  // runner coalesces concurrent notifications into a single in-flight cycle.
+  triggerSync(runSyncCycle);
   return new NextResponse(null, { status: 202 });
 }
