@@ -26,3 +26,29 @@ export function graphEventToModel(e: GraphEvent): EventModel {
     status: e.isCancelled ? "cancelled" : "active",
   };
 }
+
+export interface GraphEventPayload {
+  subject: string;
+  isAllDay: boolean;
+  start: GraphDateTime;
+  end: GraphDateTime;
+  location?: { displayName: string };
+  body?: { contentType: "text"; content: string };
+}
+
+function toGraphDateTime(d: Date): GraphDateTime {
+  // Strip the trailing "Z"; Graph wants a zone-less wall clock plus timeZone.
+  return { dateTime: d.toISOString().replace("Z", ""), timeZone: "UTC" };
+}
+
+export function modelToGraphPayload(m: EventModel): GraphEventPayload {
+  const payload: GraphEventPayload = {
+    subject: m.title,
+    isAllDay: m.isAllDay,
+    start: toGraphDateTime(m.start),
+    end: toGraphDateTime(m.end),
+  };
+  if (m.location) payload.location = { displayName: m.location };
+  if (m.description) payload.body = { contentType: "text", content: m.description };
+  return payload;
+}
