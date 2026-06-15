@@ -1,0 +1,5 @@
+:root { font-family: system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f7f7fb; color: #1a1a2e; }
+.button { padding: 8px 14px; border-radius: 6px; border: none; background: #4b2ec7; color: #fff; cursor: pointer; }
+.button:disabled { opacity: 0.5; cursor: default; }
