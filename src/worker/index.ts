@@ -5,6 +5,7 @@ import { ensureSubscriptionWith } from "@/lib/sync/subscriptionLifecycle";
 import { RealGateway } from "@/lib/graph/realGateway";
 import { createGraphClient } from "@/lib/graph/client";
 import { loadStoredSub, saveStoredSub } from "@/lib/sync/graphSubStore";
+import { retryFailed } from "@/lib/sync/retryFailed";
 
 async function ensureSubscription(): Promise<void> {
   const cfg = getConfig();
@@ -35,6 +36,8 @@ async function main(): Promise<void> {
   cron.schedule("*/10 * * * *", () => void tick("sync", runSyncCycle));
   // Renew the Graph subscription hourly (it renews only when near expiry).
   cron.schedule("0 * * * *", () => void tick("ensureSubscription", ensureSubscription));
+  // Retry any subscriptions left in a failed state (transient Graph errors).
+  cron.schedule("*/15 * * * *", () => void tick("retryFailed", retryFailed));
 }
 
 void main();
