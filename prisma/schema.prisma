@@ -57,3 +57,10 @@ model SyncLog {
   detail        String?
   createdAt     DateTime @default(now())
 }
+
+model DeltaCursor {
+  id         String   @id @default(cuid())
+  key        String   @unique
+  deltaLink  String
+  updatedAt  DateTime @updatedAt
+}
