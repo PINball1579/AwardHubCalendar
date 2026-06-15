@@ -6,10 +6,19 @@ export function SignInGate({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
   if (status === "loading") return <p style={{ padding: 24 }}>Loading…</p>;
   if (!session) {
+    const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
     return (
       <div style={{ padding: 24 }}>
         <h1>Award Hub</h1>
         <p>Sign in with your Publicis account to view the award calendar.</p>
+        {demoMode && (
+          <div style={{ marginBottom: 12 }}>
+            <button className="button" onClick={() => signIn("demo", { callbackUrl: "/" })}>Enter demo</button>
+            <p style={{ color: "#888", fontSize: 12, marginTop: 4 }}>
+              Demo mode — no Microsoft login required.
+            </p>
+          </div>
+        )}
         <button className="button" onClick={() => signIn("azure-ad")}>Sign in with Microsoft</button>
       </div>
     );

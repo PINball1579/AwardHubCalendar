@@ -5,6 +5,7 @@ import { buildAuthOptions } from "@/lib/auth";
 import { addToMyCalendar } from "@/lib/api/addToCalendar";
 import { RealGateway } from "@/lib/graph/realGateway";
 import { createGraphClient } from "@/lib/graph/client";
+import { FakeGateway } from "@/lib/graph/fakeGateway";
 
 const bodySchema = z.object({ sourceEventId: z.string().min(1) });
 
@@ -20,7 +21,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const gateway = new RealGateway(createGraphClient());
+    // In local demo mode, skip the real Microsoft Graph integration entirely
+    // and use an in-memory fake gateway so no Azure setup is required.
+    const gateway = process.env.DEMO_MODE === "true"
+      ? new FakeGateway()
+      : new RealGateway(createGraphClient());
     const result = await addToMyCalendar(gateway, {
       userId: session.user.id,
       userEmail: session.user.email,
