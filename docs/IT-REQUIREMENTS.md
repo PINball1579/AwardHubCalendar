@@ -58,6 +58,13 @@ below.
 > `<award-hub-host>` is the final hosted hostname (e.g. an Azure App Service /
 > Container Apps URL or an internal DNS name). For local testing during evaluation
 > it would be `http://localhost:3000`.
+>
+> **This host is not required to create the registration.** It is determined by the
+> hosting decision (§8) — typically the URL IT provides when provisioning the Azure
+> host, or a custom domain. Register now with the `http://localhost:3000` redirect
+> URI; the production URL can be **added later with no re-consent** (redirect URIs
+> are editable on the app registration at any time). Note this is a server-hosted
+> Node app (App Service / Container Apps), **not** the static prototype URL.
 
 > **Which directory:** the app **must** be registered in the **same Entra tenant
 > that contains the mailbox** `mln-awardsgroupe@publicisgroupe.net` — i.e. the
