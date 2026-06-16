@@ -4,7 +4,7 @@
 **Application:** Award Hub — an internal web app that shows award-show events from
 the shared **awards@publicisgroupe.com** mailbox calendar and lets staff add those
 events to their own Outlook calendar, kept automatically in sync.
-**Date:** 2026-06-15
+**Date:** 2026-06-16
 
 ---
 
@@ -56,6 +56,13 @@ below.
 > `<award-hub-host>` is the final hosted hostname (e.g. an Azure App Service /
 > Container Apps URL or an internal DNS name). For local testing during evaluation
 > it would be `http://localhost:3000`.
+
+> **Which directory:** the app **must** be registered in the **same Entra tenant
+> that contains the mailbox** `mln-awardsgroupe@publicisgroupe.net` — i.e. the
+> directory where `publicisgroupe.net` is a verified domain (shown as
+> **"Publicis Groupe"** in our testing). Publicis spans multiple domains/tenants,
+> so please confirm the Directory (tenant) ID matches the one that owns this
+> mailbox; an app registered in any other directory cannot see it.
 
 ---
 
