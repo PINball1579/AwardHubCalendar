@@ -84,6 +84,41 @@ flow) — it does **not** need to be a delegate or member of the awards@ mailbox
 > token — sign-in only identifies the person. All calendar reads/writes use the
 > application permission in §4a.
 
+### 4c. Confirmed source-mailbox identity
+
+The shared mailbox is present in the Publicis tenant. Its **canonical identity**
+(verified via Microsoft Graph) is:
+
+| Attribute | Value |
+|---|---|
+| Display name | `AWARDSGROUPE_PUB_TH` |
+| SMTP / mail alias | `awards@publicisgroupe.com` |
+| **userPrincipalName (use this)** | **`mln-awardsgroupe@publicisgroupe.net`** |
+| Object id | `f106ba3f-f1d5-4631-8f03-18745642634e` |
+
+> Graph addresses mailboxes by **UPN or object id**, not by the SMTP alias —
+> `GET /users/awards@publicisgroupe.com` returns 404. The app must be configured
+> with `AWARDS_MAILBOX = mln-awardsgroupe@publicisgroupe.net` (or the object id).
+
+### 4d. Smaller alternative for an early READ-ONLY pilot
+
+If granting the tenant-wide **application** permission needs more review time, a
+**read-only demo** of the awards@ → website direction can run with **delegated**
+permissions instead:
+
+- App registration with **delegated** `Calendars.Read.Shared` (often
+  **user-consentable**, no tenant-wide admin consent), **and**
+- The pilot user's account granted **Full Access** to the
+  `mln-awardsgroupe@publicisgroupe.net` mailbox in Exchange (Outlook calendar
+  *folder* sharing alone is **not** sufficient for Graph access — confirmed: a
+  user with Outlook delegate access still gets `403 ErrorAccessDenied` from Graph
+  without mailbox Full Access).
+
+This read-only pilot cannot do the "add to my calendar" write-back or offline
+auto-sync — those still require the application permission in §4a — but it lets
+stakeholders see the real awards@ calendar on the website with a much smaller
+grant.
+
 ---
 
 ## 5. Authentication configuration
