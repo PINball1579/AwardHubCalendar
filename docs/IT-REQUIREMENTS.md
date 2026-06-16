@@ -196,8 +196,8 @@ To limit exposure, especially during the pilot, we recommend restricting the app
   processes — the web app and a small background worker — plus **Azure Database
   for PostgreSQL** and **Azure Key Vault** for the client secret.
 - **Data stored:** award event details copied from the awards@ calendar, a mapping
-  of which staff member (Entra object id + work email) added which event, and any
-  **uploaded/curated files** shown in the gallery (see §8a).
+  of which staff member (Entra object id + work email) added which event, and the
+  **developer-placed gallery images and Entry Kit PDFs** (see §8a).
 - **Data NOT stored:** no passwords, no mailbox message content, no calendar data
   beyond the awards@ events and the app's own event copies.
 
@@ -265,5 +265,11 @@ These are loaded into the app's configuration (`AZURE_TENANT_ID`,
 2. Can the app's `/api/graph/notifications` endpoint be exposed as a public HTTPS
    endpoint (per §7)? If not, we will use the polling fallback.
 3. Any standard for client **secret vs. certificate** and rotation period we
-   should follow?
+   should follow? (If you prefer a secretless setup and the app is hosted in Azure,
+   we can use a **managed identity / workload identity federation** instead.)
 4. Preferred hosting location / subscription for the Azure resources?
+5. Are there **Conditional Access** policies that would affect either user sign-in
+   or the app's **client-credentials (service principal)** calls to Microsoft
+   Graph? If so, the app's service principal may need to be accounted for (e.g.
+   excluded from a policy that blocks service principals or enforces device/MFA
+   conditions it cannot satisfy).
