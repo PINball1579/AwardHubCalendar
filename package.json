@@ -12,6 +12,7 @@
     "start": "next start",
     "worker": "tsx src/worker/index.ts",
     "seed:demo": "tsx scripts/seed-demo.ts",
+    "sync:once": "tsx scripts/sync-once.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
