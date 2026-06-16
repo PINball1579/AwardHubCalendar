@@ -199,9 +199,9 @@ To limit exposure, especially during the pilot, we recommend restricting the app
 ## 8a. File storage & attachments (gallery / downloads)
 
 The website serves **downloadable files** — a gallery **plus per-award "Entry Kit"
-PDFs** (Award Info → *Download Entry Kit*) and similar assets/briefs. These files
-are **placed directly into storage by the development team** — there is **no
-end-user or admin upload feature in the app**. They need object storage in addition
+PDFs** (Award Info → *Download Entry Kit*) and similar assets/briefs. **Both the
+gallery images and the Entry Kit PDFs are placed directly into storage by the
+development team** — there is **no end-user or admin upload feature in the app**. They need object storage in addition
 to the PostgreSQL database:
 
 - **Provision:** an **Azure Blob Storage** account/container (or equivalent object
