@@ -198,9 +198,10 @@ To limit exposure, especially during the pilot, we recommend restricting the app
 
 ## 8a. File storage & attachments (gallery / downloads)
 
-The website includes a **gallery with file attachments/downloads** (e.g. award
-entry templates, briefs, assets). This needs object storage in addition to the
-PostgreSQL database:
+The website serves **downloadable files** — a gallery **plus per-award "Entry Kit"
+PDFs** (Award Info → *Download Entry Kit*) and similar assets/briefs. These are
+managed by the awards team and need object storage in addition to the PostgreSQL
+database:
 
 - **Provision:** an **Azure Blob Storage** account/container (or equivalent object
   store), optionally fronted by a **CDN** for fast delivery.
