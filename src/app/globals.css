@@ -1,5 +1,65 @@
-:root { font-family: system-ui, sans-serif; }
-* { box-sizing: border-box; }
-body { margin: 0; background: #f7f7fb; color: #1a1a2e; }
-.button { padding: 8px 14px; border-radius: 6px; border: none; background: #4b2ec7; color: #fff; cursor: pointer; }
-.button:disabled { opacity: 0.5; cursor: default; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: #080809;
+    color: #f4f4f5;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(230, 0, 122, 0.35);
+  }
+}
+
+@layer components {
+  .cave-container {
+    @apply mx-auto w-full max-w-content px-6;
+  }
+
+  /* Section titles: Gotham Medium, uppercase, normal tracking/leading */
+  .display-title {
+    @apply font-display font-medium uppercase leading-normal tracking-display text-white;
+  }
+
+  /* Gradient pill / button used for primary actions and active tabs */
+  .gradient-pill {
+    @apply inline-flex items-center justify-center rounded-full bg-cave-gradient
+      px-5 py-2 text-[14px] font-medium leading-normal text-white transition-opacity hover:opacity-90;
+  }
+
+  .ghost-pill {
+    @apply inline-flex items-center gap-1 rounded-full border border-ink-600
+      bg-ink-850 px-4 py-2 text-[14px] font-normal leading-normal text-zinc-200 transition-colors hover:border-ink-500;
+  }
+
+  /* Thin divider used under section headers */
+  .rule-faint {
+    @apply border-t border-ink-700;
+  }
+
+  /* Legacy button kept for any remaining inline usage */
+  .button {
+    @apply gradient-pill;
+  }
+  .button:disabled {
+    @apply cursor-default opacity-50;
+  }
+}
