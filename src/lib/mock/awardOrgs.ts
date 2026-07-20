@@ -19,7 +19,7 @@ export const AWARD_ORGS: AwardOrg[] = [
     tags: ["Creative", "Media", "PR", "Marketing", "Production"],
     entryKitUrl: "/entry-kits/cannes-lions.pdf",
     logo: "/images/awards/cannes-lions.webp",
-    logoBg: "transparent",
+    logoBg: "#000000",
   },
   {
     id: "dandad-awards",

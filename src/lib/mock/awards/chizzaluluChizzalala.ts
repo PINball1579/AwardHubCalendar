@@ -10,6 +10,8 @@ export const CHIZZALULU_CHIZZALALA: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/chizzalulu-chizzalala.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393196499879",
   accent: "amber",
   trophies: [
     { label: "1 Silver ADFEST", tier: "silver" },

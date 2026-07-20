@@ -51,6 +51,8 @@ export interface AwardEntry {
   entries: EntryRow[];
   companyCredits: CreditRow[];
   peopleCredits: CreditRow[];
+  /** Box folder the Download button opens (entry-kit assets). */
+  downloadUrl: string;
 }
 
 export interface FeaturedWork {
@@ -63,6 +65,19 @@ export interface FeaturedWork {
 
 export type CategoryColor = "cyan" | "pink" | "teal" | "tan";
 
+/** A slide in the Award Detail media slider (a photo or a video). */
+export interface MediaItem {
+  type: "image" | "video";
+  src: string;
+}
+
+/** Award-cycle milestone types; each drives a fixed chip color on the calendar. */
+export type MilestoneType =
+  | "Open for entry"
+  | "Fee increase"
+  | "Final Deadline"
+  | "Winner Announcement";
+
 export interface CalendarEvent {
   id: string;
   title: string;
@@ -70,6 +85,8 @@ export interface CalendarEvent {
   date: string;
   category: string;
   color: CategoryColor;
+  /** milestone this deadline represents (drives the chip color) */
+  milestone?: MilestoneType;
 }
 
 export interface AwardOrg {

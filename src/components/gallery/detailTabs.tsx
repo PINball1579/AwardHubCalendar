@@ -1,11 +1,12 @@
-import { TierChip } from "@/components/ui/TierChip";
+import { PrizeChip } from "@/components/ui/PrizeChip";
+import { prizeRank } from "@/lib/gallery/prize";
 import type { AwardEntry } from "@/lib/mock/types";
 
 function Section({ title, body }: { title: string; body: string }) {
   return (
     <div>
       <h3 className="font-bold leading-normal text-white text-[18px]">{title}</h3>
-      <p className="mt-2 max-w-3xl font-normal leading-relaxed text-white text-[14px] sm:text-[16px]">
+      <p className="mt-2 font-normal leading-relaxed text-white text-[14px] sm:text-[16px]">
         {body}
       </p>
     </div>
@@ -37,18 +38,20 @@ export function EntriesTab({ entry }: { entry: AwardEntry }) {
           </tr>
         </thead>
         <tbody className="font-normal leading-normal text-white text-[13px] sm:text-[14px]">
-          {entry.entries.map((row, i) => (
-            <tr key={i} className="border-b border-ink-800/70">
-              <td className="py-3 pr-4">{row.year}</td>
-              <td className="py-3 pr-4">{row.name}</td>
-              <td className="py-3 pr-4">{row.category}</td>
-              <td className="py-3 pr-4">{row.subCategory}</td>
-              <td className="py-3 pr-4">{row.awards}</td>
-              <td className="py-3 pr-4">
-                <TierChip label={row.prize} tier={row.prizeTier} size="sm" />
-              </td>
-            </tr>
-          ))}
+          {[...entry.entries]
+            .sort((a, b) => prizeRank(a.prize) - prizeRank(b.prize))
+            .map((row, i) => (
+              <tr key={i} className="border-b border-ink-800/70">
+                <td className="py-3 pr-4">{row.year}</td>
+                <td className="py-3 pr-4">{row.name}</td>
+                <td className="py-3 pr-4">{row.category}</td>
+                <td className="py-3 pr-4">{row.subCategory}</td>
+                <td className="py-3 pr-4">{row.awards}</td>
+                <td className="py-3 pr-4">
+                  <PrizeChip label={row.prize} size="sm" />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

@@ -38,6 +38,16 @@ const config: Config = {
           tan: "#9d833e",
           bronze: "#a66a3f",
         },
+        // Prize badge palette (Award Detail entries + trophy chips) — matches
+        // the design legend: Grand Prix > Gold > Silver > Bronze > Shortlisted > Others.
+        prize: {
+          grandprix: "#c13c92",
+          gold: "#a08a3e",
+          silver: "#a6a6a6",
+          bronze: "#a66a3f",
+          shortlisted: "#3ea99e",
+          other: "#4ba6d8",
+        },
         muted: {
           DEFAULT: "#a7a7ad",
           dim: "#7a7a80",

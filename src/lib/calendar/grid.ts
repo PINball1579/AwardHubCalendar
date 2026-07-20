@@ -1,6 +1,27 @@
-import type { CalendarEvent } from "@/lib/mock/types";
+import type {
+  CalendarEvent,
+  CategoryColor,
+  MilestoneType,
+} from "@/lib/mock/types";
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+/** Milestone → chip color (Open for entry=teal, Fee increase=tan,
+ *  Final Deadline=pink, Winner Announcement=cyan). */
+export const MILESTONE_COLOR: Record<MilestoneType, CategoryColor> = {
+  "Open for entry": "teal",
+  "Fee increase": "tan",
+  "Final Deadline": "pink",
+  "Winner Announcement": "cyan",
+};
+
+/** Ordered milestones for the calendar legend. */
+export const MILESTONE_LEGEND: MilestoneType[] = [
+  "Open for entry",
+  "Fee increase",
+  "Final Deadline",
+  "Winner Announcement",
+];
 
 /** Build a 6-week (42-cell) grid of UTC dates covering the given month. */
 export function buildMonthGrid(year: number, month0: number): Date[] {
@@ -18,6 +39,12 @@ export function buildMonthGrid(year: number, month0: number): Date[] {
 /** Format a UTC date as a YYYY-MM-DD key. */
 export function dayKey(d: Date): string {
   return d.toISOString().slice(0, 10);
+}
+
+/** The current month (local time), used as the default calendar view. */
+export function currentMonth(): { year: number; month0: number } {
+  const now = new Date();
+  return { year: now.getFullYear(), month0: now.getMonth() };
 }
 
 /** Today's YYYY-MM-DD key in the user's local timezone. */

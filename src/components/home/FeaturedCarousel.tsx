@@ -4,10 +4,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FEATURED_WORK } from "@/lib/mock/featured";
+import { AWARD_ENTRIES } from "@/lib/mock/awards";
+
+// order the highlights by newest project first (by the campaign's year)
+const YEAR_BY_SLUG = new Map(AWARD_ENTRIES.map((e) => [e.slug, e.year]));
+const FEATURED = [...FEATURED_WORK].sort(
+  (a, b) => (YEAR_BY_SLUG.get(b.slug) ?? 0) - (YEAR_BY_SLUG.get(a.slug) ?? 0),
+);
 
 export function FeaturedCarousel() {
   const [active, setActive] = useState(0);
-  const total = FEATURED_WORK.length;
+  const total = FEATURED.length;
 
   const shift = (delta: number) =>
     setActive((prev) => (prev + delta + total) % total);
@@ -15,7 +22,7 @@ export function FeaturedCarousel() {
   return (
     <section className="cave-container py-6">
       <div className="grid grid-cols-2 gap-1 md:grid-cols-4">
-        {FEATURED_WORK.map((work, i) => (
+        {FEATURED.map((work, i) => (
           <Link
             key={work.slug}
             href={`/gallery/${work.slug}`}

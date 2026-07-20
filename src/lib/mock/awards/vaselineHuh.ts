@@ -10,6 +10,8 @@ export const VASELINE_HUH: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/vaseline-huh.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393198026262",
   accent: "rose",
   trophies: [
     { label: "1 Gold Campaign Asia - Media Awards", tier: "gold" },

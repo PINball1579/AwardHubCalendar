@@ -8,3 +8,6 @@ playwright-report/
 test-results/
 .DS_Store
 *.tsbuildinfo
+
+# Large award-detail media (2.5GB of video/images; served locally, host on a CDN for prod)
+public/Awards-Detail/

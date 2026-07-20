@@ -10,6 +10,8 @@ export const IT_MUST_BE_STING: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/it-must-be-sting.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393195551168",
   accent: "rose",
   trophies: [
     { label: "1 Bronze ADFEST", tier: "bronze" },

@@ -1,49 +1,72 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { EntryCard } from "./EntryCard";
+import { FilterDropdown } from "./FilterDropdown";
 import { AWARD_ENTRIES } from "@/lib/mock/awards";
+import {
+  FILTER_GROUPS,
+  FILTER_MODES,
+  FILTER_OPTIONS,
+  filterEntries,
+  type FilterGroup,
+} from "@/lib/gallery/filters";
 
-const FILTER_GROUPS = [
-  "Year",
-  "Award",
-  "Agency",
-  "Trophy",
-  "Client",
-  "Category",
-  "Sector",
+const SORT_OPTIONS = [
+  "Newest to oldest",
+  "Oldest to newest",
+  "Most Awarded",
+  "Title A-Z",
+  "Title Z-A",
 ] as const;
-
-const SORT_OPTIONS = ["Newest to oldest", "Oldest to newest", "A–Z"] as const;
-
-/** Applied-filter chip colors, looping green → pink → blue → gold (Figma). */
-const FILTER_CHIP_COLORS = [
-  "bg-chip-teal", // #00b0a3
-  "bg-chip-pink", // #d93d7a
-  "bg-chip-cyan", // #16abe0
-  "bg-chip-tan", // #9d833e
-] as const;
+type SortOption = (typeof SORT_OPTIONS)[number];
 
 export function GalleryClient() {
-  const [activeFilters, setActiveFilters] = useState<string[]>([
-    "Cannes Lions",
-    "Spikes Asia",
-  ]);
-  const [sort, setSort] = useState<(typeof SORT_OPTIONS)[number]>(
-    "Newest to oldest",
-  );
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [sort, setSort] = useState<SortOption>("Newest to oldest");
+  /** which dropdown is open — only one at a time, "Sort" for the sort menu */
+  const [openMenu, setOpenMenu] = useState<FilterGroup | "Sort" | null>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+
+  // close whichever dropdown is open when clicking outside the filter bar
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (e: MouseEvent) => {
+      if (barRef.current && !barRef.current.contains(e.target as Node)) {
+        setOpenMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [openMenu]);
 
   const removeFilter = (f: string) =>
     setActiveFilters((prev) => prev.filter((x) => x !== f));
 
+  const selectFilter = (group: FilterGroup, option: string) =>
+    setActiveFilters((prev) => {
+      const already = prev.includes(option);
+      if (FILTER_MODES[group] === "single") {
+        // radio: clear the rest of this group, then toggle the chosen one
+        const groupOptions = FILTER_OPTIONS[group] as readonly string[];
+        const withoutGroup = prev.filter((x) => !groupOptions.includes(x));
+        return already ? withoutGroup : [...withoutGroup, option];
+      }
+      // checkbox: toggle
+      return already ? prev.filter((x) => x !== option) : [...prev, option];
+    });
+
   const entries = useMemo(() => {
-    const sorted = [...AWARD_ENTRIES];
-    if (sort === "Newest to oldest") sorted.sort((a, b) => b.year - a.year);
-    if (sort === "Oldest to newest") sorted.sort((a, b) => a.year - b.year);
-    if (sort === "A–Z") sorted.sort((a, b) => a.title.localeCompare(b.title));
-    return sorted;
-  }, [sort]);
+    const list = filterEntries([...AWARD_ENTRIES], activeFilters);
+    if (sort === "Newest to oldest") list.sort((a, b) => b.year - a.year);
+    if (sort === "Oldest to newest") list.sort((a, b) => a.year - b.year);
+    if (sort === "Most Awarded")
+      list.sort((a, b) => b.entries.length - a.entries.length);
+    if (sort === "Title A-Z") list.sort((a, b) => a.title.localeCompare(b.title));
+    if (sort === "Title Z-A") list.sort((a, b) => b.title.localeCompare(a.title));
+    return list;
+  }, [sort, activeFilters]);
 
   return (
     <div>
@@ -59,54 +82,69 @@ export function GalleryClient() {
 
       <div className="cave-container py-8">
         {/* filter bar */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div ref={barRef} className="flex flex-wrap items-center gap-3">
           {FILTER_GROUPS.map((group) => (
-            <details key={group} className="group relative">
-              <summary className="ghost-pill cursor-pointer list-none">
-                {group}
-                <span className="text-muted">▾</span>
-              </summary>
-            </details>
-          ))}
-          <label className="ml-auto flex items-center gap-2 font-normal leading-normal text-muted text-[14px]">
-            Sort by
-            <select
-              value={sort}
-              onChange={(e) =>
-                setSort(e.target.value as (typeof SORT_OPTIONS)[number])
+            <FilterDropdown
+              key={group}
+              label={group}
+              options={FILTER_OPTIONS[group]}
+              selected={activeFilters}
+              mode={FILTER_MODES[group]}
+              open={openMenu === group}
+              onToggleOpen={() =>
+                setOpenMenu((cur) => (cur === group ? null : group))
               }
-              className="rounded-full border border-ink-600 bg-ink-850 px-3 py-1.5 font-normal text-zinc-200 text-[14px]"
-            >
-              {SORT_OPTIONS.map((o) => (
-                <option key={o}>{o}</option>
-              ))}
-            </select>
-          </label>
+              onSelect={(option) => selectFilter(group, option)}
+            />
+          ))}
+
+          <div className="ml-auto flex items-center gap-2">
+            <span className="font-normal leading-normal text-muted text-[14px]">
+              Sort by
+            </span>
+            <FilterDropdown
+              label={sort}
+              options={SORT_OPTIONS}
+              selected={[sort]}
+              mode="single"
+              align="right"
+              open={openMenu === "Sort"}
+              onToggleOpen={() =>
+                setOpenMenu((cur) => (cur === "Sort" ? null : "Sort"))
+              }
+              onSelect={(option) => {
+                setSort(option as SortOption);
+                setOpenMenu(null);
+              }}
+            />
+          </div>
         </div>
 
-        {/* active filters */}
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="font-normal leading-normal text-white text-[14px]">Selected filters</span>
-          {activeFilters.map((f, i) => (
-            <button
-              key={f}
-              onClick={() => removeFilter(f)}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-normal leading-normal text-white text-[13px] ${
-                FILTER_CHIP_COLORS[i % FILTER_CHIP_COLORS.length]
-              }`}
-            >
-              {f} <span aria-hidden="true">✕</span>
-            </button>
-          ))}
-          {activeFilters.length > 0 && (
-            <button
-              onClick={() => setActiveFilters([])}
-              className="font-normal text-muted text-[13px] underline hover:text-zinc-200"
-            >
-              Clear
-            </button>
-          )}
-        </div>
+        {/* active filters — all gold; scrolls horizontally when long */}
+        {activeFilters.length > 0 && (
+          <div className="mt-4 flex items-center gap-2">
+            <span className="shrink-0 font-normal leading-normal text-white text-[14px]">
+              Selected filters
+            </span>
+            <div className="flex flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap pb-1">
+              {activeFilters.map((f) => (
+                <button
+                  key={f}
+                  onClick={() => removeFilter(f)}
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-cave-gold px-3 py-1 font-normal leading-normal text-ink-950 text-[13px]"
+                >
+                  {f} <span aria-hidden="true">✕</span>
+                </button>
+              ))}
+              <button
+                onClick={() => setActiveFilters([])}
+                className="shrink-0 font-normal text-muted text-[13px] underline hover:text-zinc-200"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* grid */}
         <div className="mt-8 grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3 lg:grid-cols-4">

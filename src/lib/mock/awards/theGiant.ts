@@ -10,8 +10,10 @@ export const THE_GIANT: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-giant.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393190695608",
   accent: "cyan",
-  trophies: [{ label: "1 Shortlist Cannes Lions", tier: "finalist" }],
+  trophies: [{ label: "1 Shortlisted Cannes Lions", tier: "finalist" }],
   stats: [
     { value: "146M+", label: "Impressions" },
     { value: "47M+", label: "Views" },
@@ -45,7 +47,7 @@ export const THE_GIANT: AwardEntry = {
     },
   ],
   entries: [
-    { year: 2026, name: "The Giant", category: "Film: Online Film", subCategory: "Use of Humour", awards: "Cannes Lions", prize: "Shortlist", prizeTier: "finalist" },
+    { year: 2026, name: "The Giant", category: "Film: Online Film", subCategory: "Use of Humour", awards: "Cannes Lions", prize: "Shortlisted", prizeTier: "finalist" },
   ],
   companyCredits: credits(
     ["LEO BANGKOK", "Factory01", "Factory01"],

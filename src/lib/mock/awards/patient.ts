@@ -10,11 +10,15 @@ export const PATIENT: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/patient.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/384638284768",
   accent: "amber",
   trophies: [
+    { label: "1 Grand Prix Retail Banker International (RBI) Asia Trailblazer Awards 2026", tier: "winner" },
     { label: "1 Gold Adfest", tier: "gold" },
     { label: "1 Bronze Spike", tier: "bronze" },
     { label: "1 Bronze Clio", tier: "bronze" },
+    { label: "2 Shortlisted Adfest", tier: "finalist" },
   ],
   stats: [
     { value: "30M+", label: "Reach" },
@@ -44,9 +48,9 @@ export const PATIENT: AwardEntry = {
     { year: 2026, name: "Patient", category: "Film: Online Film", subCategory: "Finance & Real Estate", awards: "Adfest", prize: "Gold", prizeTier: "gold" },
     { year: 2026, name: "Patient", category: "Film: Online Film", subCategory: "Consumer Services / Business to Business", awards: "Spikes Asia", prize: "Bronze", prizeTier: "bronze" },
     { year: 2026, name: "Patient", category: "Film", subCategory: "31 to 60 seconds", awards: "Clio", prize: "Bronze", prizeTier: "bronze" },
-    { year: 2026, name: "Patient", category: "Film: Culture & Context", subCategory: "Use of Humour", awards: "Spikes Asia", prize: "Finalist", prizeTier: "finalist" },
-    { year: 2026, name: "Patient", category: "Film: Online Film", subCategory: "Viral Film", awards: "Adfest", prize: "Finalist", prizeTier: "finalist" },
-    { year: 2026, name: "Patient", category: "Best Marketing Campaign of the Year", subCategory: "–", awards: "Retail Banker International (RBI) Asia Trailblazer Awards 2026", prize: "Winner", prizeTier: "winner" },
+    { year: 2026, name: "Patient", category: "Film: Culture & Context", subCategory: "Use of Humour", awards: "Adfest", prize: "Shortlisted", prizeTier: "finalist" },
+    { year: 2026, name: "Patient", category: "Film: Online Film", subCategory: "Viral Film", awards: "Adfest", prize: "Shortlisted", prizeTier: "finalist" },
+    { year: 2026, name: "Patient", category: "Best Marketing Campaign of the Year", subCategory: "–", awards: "Retail Banker International (RBI) Asia Trailblazer Awards 2026", prize: "Grand Prix", prizeTier: "winner" },
   ],
   companyCredits: credits(
     ["LEO BANGKOK", "Factory01", "Factory01"],

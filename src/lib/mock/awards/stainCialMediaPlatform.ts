@@ -10,6 +10,8 @@ export const STAIN_CIAL_MEDIA_PLATFORM: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-stain-cial-media-platform.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393196554160",
   accent: "cyan",
   trophies: [
     { label: "1 Gold Campaign Asia - Media Awards", tier: "gold" },

@@ -9,8 +9,10 @@ export const WHERE_AI_MEETS_CONTEXT: AwardEntry = {
   year: 2026,
   location: "Thailand",
   image: "/images/details/where-ai-meets-context.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393197166505",
   accent: "cyan",
-  trophies: [{ label: "1 Shortlist Campaign Asia", tier: "finalist" }],
+  trophies: [{ label: "1 Shortlisted Campaign Asia", tier: "finalist" }],
   stats: [
     { value: "+20%", label: "Sales" },
     { value: "-93%", label: "Cost/visit" },
@@ -40,7 +42,7 @@ export const WHERE_AI_MEETS_CONTEXT: AwardEntry = {
     },
   ],
   entries: [
-    { year: 2026, name: "Where AI Meets Context: Reinventing Media That Converts", category: "Best Use of AI in Media", subCategory: "M04", awards: "Campaign Asia - Media Awards", prize: "Shortlist", prizeTier: "finalist" },
+    { year: 2026, name: "Where AI Meets Context: Reinventing Media That Converts", category: "Best Use of AI in Media", subCategory: "M04", awards: "Campaign Asia - Media Awards", prize: "Shortlisted", prizeTier: "finalist" },
   ],
   companyCredits: [],
   peopleCredits: [],

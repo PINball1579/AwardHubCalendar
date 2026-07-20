@@ -10,6 +10,8 @@ export const THE_UNFLUENCER: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-unfluencer.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393197423945",
   accent: "violet",
   trophies: [
     { label: "1 Bronze ADFEST", tier: "bronze" },

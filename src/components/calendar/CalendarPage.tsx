@@ -4,11 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   buildMonthGrid,
+  currentMonth,
   dayKey,
   groupEventsByDay,
   localTodayKey,
   monthLabel,
   CHIP_COLOR_CLASS,
+  MILESTONE_COLOR,
+  MILESTONE_LEGEND,
   WEEKDAYS,
 } from "@/lib/calendar/grid";
 import { MOCK_CALENDAR_EVENTS, DEMO_DEFAULT_MONTH } from "@/lib/mock/calendarEvents";
@@ -37,16 +40,23 @@ export function CalendarPage() {
   const { data: session } = useSession();
   const [live, setLive] = useState<CalendarEvent[] | null>(null);
   const [addableIds, setAddableIds] = useState<Set<string>>(new Set());
+  // Default to the current month (today). Resolved after mount so the SSG
+  // HTML and the first client render match (no hydration mismatch); the grid
+  // is gated on `mounted` so no stale month flashes first.
   const [year, setYear] = useState(DEMO_DEFAULT_MONTH.year);
   const [month0, setMonth0] = useState(DEMO_DEFAULT_MONTH.month0);
   const [selected, setSelected] = useState<string | null>(null);
   const [adding, setAdding] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  // set after mount so the server and client render the same HTML
   const [todayKey, setTodayKey] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const m = currentMonth();
+    setYear(m.year);
+    setMonth0(m.month0);
     setTodayKey(localTodayKey());
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -58,9 +68,9 @@ export function CalendarPage() {
           const mapped = mapLiveEvents(res.data as EventDto[]);
           setLive(mapped);
           setAddableIds(new Set(mapped.map((e) => e.id)));
-          const now = new Date();
-          setYear(now.getUTCFullYear());
-          setMonth0(now.getUTCMonth());
+          const m = currentMonth();
+          setYear(m.year);
+          setMonth0(m.month0);
         }
       })
       .catch(() => undefined);
@@ -111,15 +121,9 @@ export function CalendarPage() {
         with our real-time synchronization engine.
       </p>
 
-      {/* filter + month tabs */}
+      {/* month tabs (rendered once the current month resolves after mount) */}
+      {mounted && (
       <div className="mt-7 flex flex-wrap items-center gap-3">
-        {/* Figma: square black button with gold border */}
-        <span className="inline-flex items-center gap-2 rounded-[4px] border border-cave-gold bg-black px-4 py-2 font-medium uppercase leading-normal text-white text-[12px] sm:text-[13px]">
-          All Category
-          <span aria-hidden="true" className="text-cave-gold">
-            ⌄
-          </span>
-        </span>
         <div className="flex items-center gap-1 text-sm">
           <button onClick={() => shift(-1)} aria-label="Previous month" className="px-2 text-muted hover:text-cave-gold">
             ‹
@@ -147,6 +151,7 @@ export function CalendarPage() {
           </button>
         </div>
       </div>
+      )}
 
       {!session && (
         <p className="mt-4 text-xs text-muted-dim">
@@ -155,7 +160,24 @@ export function CalendarPage() {
         </p>
       )}
 
-      {/* month grid (horizontal scroll on small screens) */}
+      {/* milestone legend — each color marks a stage of the award cycle */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+        {MILESTONE_LEGEND.map((m) => (
+          <div key={m} className="flex items-center gap-2">
+            <span
+              className={`h-3 w-3 rounded-sm ${CHIP_COLOR_CLASS[MILESTONE_COLOR[m]]}`}
+            />
+            <span className="font-normal leading-normal text-white text-[12px] sm:text-[13px]">
+              {m}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* month grid — shown once the current month resolves after mount */}
+      {!mounted ? (
+        <div className="mt-5 h-[760px] rounded-md border border-cave-golddim/60" />
+      ) : (
       <div className="mt-5 -mx-6 overflow-x-auto px-6 sm:mx-0 sm:px-0">
         {/* Figma: gold grid lines, square corners, cells taller than wide */}
         <div className="grid min-w-[680px] grid-cols-7 border-l border-t border-cave-golddim">
@@ -206,6 +228,7 @@ export function CalendarPage() {
           })}
         </div>
       </div>
+      )}
 
       {/* day detail */}
       {selected && (

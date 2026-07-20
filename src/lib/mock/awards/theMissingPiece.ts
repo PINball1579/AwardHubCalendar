@@ -10,6 +10,8 @@ export const THE_MISSING_PIECE: AwardEntry = {
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-missing-piece.webp",
+  downloadUrl:
+    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393198436343",
   accent: "violet",
   trophies: [
     { label: "1 Silver ADFEST", tier: "silver" },
