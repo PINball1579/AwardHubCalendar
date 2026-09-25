@@ -5,13 +5,22 @@ import { credits } from "./helpers";
 export const THE_GIANT: AwardEntry = {
   slug: "the-giant",
   title: "The Giant",
-  agency: "LEO, Bangkok",
+  agency: "LEO Bangkok",
   client: "Krungsri First Choice",
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-giant.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393190695608",
+    "https://lion.box.com/s/8y5d6qdc6nno60gehxyzdmwj1z4l00a8",
+  filters: {
+    awards: ["Mad Stars", "Cannes Lions"],
+    agencies: ["Leo Bangkok (LBB)"],
+    clients: ["Krungsri First Choice"],
+    trophies: ["Shortlisted"],
+    categories: ["Film"],
+    sectors: ["Financial Services"],
+    years: [2026],
+  },
   accent: "cyan",
   trophies: [{ label: "1 Shortlisted Cannes Lions", tier: "finalist" }],
   stats: [

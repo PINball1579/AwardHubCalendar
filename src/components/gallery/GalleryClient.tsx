@@ -4,29 +4,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EntryCard } from "./EntryCard";
 import { FilterDropdown } from "./FilterDropdown";
+import { MobileFilterSheet } from "./MobileFilterSheet";
 import { AWARD_ENTRIES } from "@/lib/mock/awards";
 import {
   FILTER_GROUPS,
   FILTER_MODES,
   FILTER_OPTIONS,
   filterEntries,
+  SORT_OPTIONS,
   type FilterGroup,
+  type SortOption,
 } from "@/lib/gallery/filters";
-
-const SORT_OPTIONS = [
-  "Newest to oldest",
-  "Oldest to newest",
-  "Most Awarded",
-  "Title A-Z",
-  "Title Z-A",
-] as const;
-type SortOption = (typeof SORT_OPTIONS)[number];
 
 export function GalleryClient() {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [sort, setSort] = useState<SortOption>("Newest to oldest");
   /** which dropdown is open — only one at a time, "Sort" for the sort menu */
   const [openMenu, setOpenMenu] = useState<FilterGroup | "Sort" | null>(null);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
 
   // close whichever dropdown is open when clicking outside the filter bar
@@ -68,6 +63,24 @@ export function GalleryClient() {
     return list;
   }, [sort, activeFilters]);
 
+  const sortControl = (
+    <FilterDropdown
+      label={sort}
+      options={SORT_OPTIONS}
+      selected={[sort]}
+      mode="single"
+      align="right"
+      open={openMenu === "Sort"}
+      onToggleOpen={() =>
+        setOpenMenu((cur) => (cur === "Sort" ? null : "Sort"))
+      }
+      onSelect={(option) => {
+        setSort(option as SortOption);
+        setOpenMenu(null);
+      }}
+    />
+  );
+
   return (
     <div>
       {/* cinematic hero band */}
@@ -81,52 +94,65 @@ export function GalleryClient() {
       </div>
 
       <div className="cave-container py-8">
-        {/* filter bar */}
-        <div ref={barRef} className="flex flex-wrap items-center gap-3">
-          {FILTER_GROUPS.map((group) => (
-            <FilterDropdown
-              key={group}
-              label={group}
-              options={FILTER_OPTIONS[group]}
-              selected={activeFilters}
-              mode={FILTER_MODES[group]}
-              open={openMenu === group}
-              onToggleOpen={() =>
-                setOpenMenu((cur) => (cur === group ? null : group))
-              }
-              onSelect={(option) => selectFilter(group, option)}
-            />
-          ))}
+        <div ref={barRef}>
+          {/* mobile trigger row — opens the full-screen Filters sheet + sort dropdown */}
+          <div className="flex items-center justify-between gap-3 md:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileFiltersOpen(true)}
+              className="flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-cave-golddim bg-black px-4 font-normal uppercase leading-normal text-white text-[12px]"
+            >
+              All filters
+            </button>
+            {sortControl}
+          </div>
 
-          <div className="ml-auto flex items-center gap-2">
-            <span className="font-normal leading-normal text-muted text-[14px]">
-              Sort by
-            </span>
-            <FilterDropdown
-              label={sort}
-              options={SORT_OPTIONS}
-              selected={[sort]}
-              mode="single"
-              align="right"
-              open={openMenu === "Sort"}
-              onToggleOpen={() =>
-                setOpenMenu((cur) => (cur === "Sort" ? null : "Sort"))
-              }
-              onSelect={(option) => {
-                setSort(option as SortOption);
-                setOpenMenu(null);
-              }}
-            />
+          {/* filter bar */}
+          <div className="hidden flex-wrap items-center gap-3 md:flex">
+            {FILTER_GROUPS.map((group) => (
+              <FilterDropdown
+                key={group}
+                label={group}
+                options={FILTER_OPTIONS[group]}
+                selected={activeFilters}
+                mode={FILTER_MODES[group]}
+                open={openMenu === group}
+                onToggleOpen={() =>
+                  setOpenMenu((cur) => (cur === group ? null : group))
+                }
+                onSelect={(option) => selectFilter(group, option)}
+              />
+            ))}
+
+            <div className="ml-auto flex items-center gap-2">
+              <span className="font-normal leading-normal text-muted text-[14px]">
+                Sort by
+              </span>
+              {sortControl}
+            </div>
           </div>
         </div>
 
-        {/* active filters — all gold; scrolls horizontally when long */}
+        {/* active filters — mobile: chips wrap onto new lines; desktop: label and
+            Clear stay pinned while only the chip row scrolls sideways */}
         {activeFilters.length > 0 && (
-          <div className="mt-4 flex items-center gap-2">
-            <span className="shrink-0 font-normal leading-normal text-white text-[14px]">
+          <div className="mt-4 flex flex-col gap-2 md:flex-row md:items-center">
+            <div className="flex items-center justify-between gap-2 md:hidden">
+              <span className="font-normal leading-normal text-white text-[14px]">
+                Selected filters
+              </span>
+              <button
+                onClick={() => setActiveFilters([])}
+                className="shrink-0 font-normal text-muted text-[13px] underline hover:text-zinc-200"
+              >
+                Clear
+              </button>
+            </div>
+
+            <span className="hidden shrink-0 font-normal leading-normal text-white text-[14px] md:block">
               Selected filters
             </span>
-            <div className="flex flex-1 items-center gap-2 overflow-x-auto whitespace-nowrap pb-1">
+            <div className="flex flex-wrap items-center gap-2 md:min-w-0 md:flex-1 md:flex-nowrap md:overflow-x-auto md:whitespace-nowrap md:pb-1">
               {activeFilters.map((f) => (
                 <button
                   key={f}
@@ -136,13 +162,13 @@ export function GalleryClient() {
                   {f} <span aria-hidden="true">✕</span>
                 </button>
               ))}
-              <button
-                onClick={() => setActiveFilters([])}
-                className="shrink-0 font-normal text-muted text-[13px] underline hover:text-zinc-200"
-              >
-                Clear
-              </button>
             </div>
+            <button
+              onClick={() => setActiveFilters([])}
+              className="hidden shrink-0 font-normal text-muted text-[13px] underline hover:text-zinc-200 md:block"
+            >
+              Clear
+            </button>
           </div>
         )}
 
@@ -153,6 +179,18 @@ export function GalleryClient() {
           ))}
         </div>
       </div>
+
+      <MobileFilterSheet
+        open={mobileFiltersOpen}
+        onClose={() => setMobileFiltersOpen(false)}
+        activeFilters={activeFilters}
+        sort={sort}
+        onApply={(filters, newSort) => {
+          setActiveFilters(filters);
+          setSort(newSort);
+          setMobileFiltersOpen(false);
+        }}
+      />
     </div>
   );
 }

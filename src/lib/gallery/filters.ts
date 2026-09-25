@@ -13,7 +13,7 @@ export const FILTER_OPTIONS = {
     "The Effie",
     "D&AD",
     "Cannes Lions",
-    "New York Festival Advertising",
+    "New York Festivals Advertising",
     "Marketing Excellence (MEA)",
     "One Asia",
     "Campaign Brief The Work",
@@ -23,10 +23,15 @@ export const FILTER_OPTIONS = {
     "MMA Smarties",
     "London International (LIA)",
     "Agency of The Year",
+    "Gerety Awards",
+    "White Square Festival",
+    "Campaign Asia - Media Awards",
+    "Clio Awards",
+    "Festival of Media APAC",
     "Others",
   ],
   Agency: [
-    "Leo Bangkok (LLB)",
+    "Leo Bangkok (LBB)",
     "Publicis Thailand (PUB)",
     "Brilliant & Million (BM)",
     "Publicis Media (PUBM)",
@@ -37,7 +42,7 @@ export const FILTER_OPTIONS = {
     "Digitas (DGT)",
     "Publicis Groupe (PUBTH)",
   ],
-  Trophy: ["Finalist", "Bronze", "Silver", "Gold", "Grand Prix", "Titanium"],
+  Trophy: ["Grand Prix", "Gold", "Silver", "Bronze", "Shortlisted", "Others"],
   Client: [
     "KFC",
     "Vaseline",
@@ -47,28 +52,36 @@ export const FILTER_OPTIONS = {
     "Clear",
     "Sunsilk",
     "McDonald's",
+    "Visa",
+    "Mirinda",
   ],
   Category: [
-    "Creative & Craft",
-    "Digital & Technology",
+    "Film",
     "Media",
-    "Integrated / Campaign",
-    "Strategy & Effectiveness",
-    "PR & Social",
-    "Experience & Activation",
-    "Purpose, Culture & Sustainability",
+    "PR",
+    "Entertainment",
+    "Social / Creator & Influencer",
+    "Digital & Social",
+    "Film Craft",
+    "Brand Experience & Activation",
+    "Marketing & Effectiveness",
+    "Human Resource",
+    "People Awards",
+    "Others",
   ],
   Sector: [
-    "Film",
-    "Print",
-    "Outdoor",
-    "Social Media",
-    "Influencer",
-    "Digital / Web / App",
-    "PR / Earned Media",
-    "Experiential / Live",
-    "Retail / Shopper",
-    "Data / Tech-Driven",
+    "Technology & Telecommunications",
+    "FMCG & Household Products",
+    "Food & Beverage",
+    "Retail & E-commerce",
+    "Automotive & Mobility",
+    "Financial Services",
+    "Energy / Utilities & Industrial",
+    "Healthcare & Wellness",
+    "Travel / Hospitality & Leisure",
+    "Entertainment / Media & Gaming",
+    "Real Estate & Property",
+    "Government / NGO & Social Impact",
   ],
 } as const;
 
@@ -76,12 +89,31 @@ export type FilterGroup = keyof typeof FILTER_OPTIONS;
 
 export const FILTER_GROUPS = Object.keys(FILTER_OPTIONS) as FilterGroup[];
 
+/** Display label per group — Figma's mobile filter sheet spells "Award" as "Awards". */
+export const FILTER_GROUP_LABELS: Record<FilterGroup, string> = {
+  Year: "Year",
+  Award: "Awards",
+  Agency: "Agency",
+  Trophy: "Trophy",
+  Client: "Client",
+  Category: "Category",
+  Sector: "Sector",
+};
+
+export const SORT_OPTIONS = [
+  "Newest to oldest",
+  "Oldest to newest",
+  "Most Awarded",
+  "Title A-Z",
+  "Title Z-A",
+] as const;
+
+export type SortOption = (typeof SORT_OPTIONS)[number];
+
 /**
  * Selection mode per group.
  * - "multi" → checkbox dropdown (Figma 276:3686): several options at once.
  * - "single" → radio dropdown (Figma 276:3733): one option per group.
- * Year is unspecified by the design brief; kept multi so several years can
- * be combined.
  */
 export const FILTER_MODES: Record<FilterGroup, "multi" | "single"> = {
   Year: "multi",
@@ -100,81 +132,31 @@ export function groupOfFilter(value: string): FilterGroup | undefined {
   );
 }
 
-/** Substrings that identify each named Award option in the entries table. */
-const AWARD_KEYS: Record<string, string[]> = {
-  Adfest: ["adfest"],
-  "Spikes Asia": ["spikes"],
-  "The One Show": ["one show"],
-  "The Effie": ["effie"],
-  "D&AD": ["d&ad"],
-  "Cannes Lions": ["cannes"],
-  "New York Festival Advertising": ["new york"],
-  "Marketing Excellence (MEA)": ["marketing excellence", "mea"],
-  "One Asia": ["one asia"],
-  "Campaign Brief The Work": ["campaign brief"],
-  "Mad Stars": ["mad stars"],
-  "HR Excellence": ["hr excellence"],
-  Adman: ["adman"],
-  "MMA Smarties": ["smarties"],
-  "London International (LIA)": ["london international", "lia"],
-  "Agency of The Year": ["agency of the year"],
-};
-
-/** Substrings that identify each Agency option in `entry.agency`. */
-const AGENCY_KEYS: Record<string, string[]> = {
-  "Leo Bangkok (LLB)": ["leo"],
-  "Publicis Thailand (PUB)": ["publicis thailand", "publicis, bangkok"],
-  "Brilliant & Million (BM)": ["brilliant"],
-  "Publicis Media (PUBM)": ["publicis media"],
-  "Spark Foundry (PUBM_SP)": ["spark"],
-  "Zenith (PUBM_ZOT)": ["zenith"],
-  "Starcom (PUBM_STT)": ["starcom"],
-  "Pub U (PUBM_PUBU)": ["pub u"],
-  "Digitas (DGT)": ["digitas"],
-  "Publicis Groupe (PUBTH)": ["publicis groupe"],
-};
-
-function matchesAward(entry: AwardEntry, option: string): boolean {
-  const rows = entry.entries.map((r) => r.awards.toLowerCase());
-  if (option === "Others") {
-    const named = Object.values(AWARD_KEYS).flat();
-    return rows.some((a) => !named.some((k) => a.includes(k)));
-  }
-  const keys = AWARD_KEYS[option] ?? [option.toLowerCase()];
-  return rows.some((a) => keys.some((k) => a.includes(k)));
-}
-
-function matchesTrophy(entry: AwardEntry, option: string): boolean {
-  const o = option.toLowerCase();
-  return entry.entries.some(
-    (r) => r.prizeTier === o || r.prize.toLowerCase().includes(o),
-  );
-}
-
+/**
+ * Does a work match a single filter option? Each work is tagged with the
+ * distinct values it won (entry.filters), so matching is exact membership.
+ */
 function matchesGroupOption(
   entry: AwardEntry,
   group: FilterGroup,
   option: string,
 ): boolean {
+  const f = entry.filters;
   switch (group) {
     case "Year":
-      return entry.year === Number(option);
+      return f.years.includes(Number(option));
     case "Award":
-      return matchesAward(entry, option);
-    case "Agency": {
-      const keys = AGENCY_KEYS[option] ?? [option.toLowerCase()];
-      const agency = entry.agency.toLowerCase();
-      return keys.some((k) => agency.includes(k));
-    }
+      return f.awards.includes(option);
+    case "Agency":
+      return f.agencies.includes(option);
     case "Trophy":
-      return matchesTrophy(entry, option);
+      return f.trophies.includes(option);
     case "Client":
-      return entry.client.toLowerCase().includes(option.toLowerCase());
-    // The mock entries carry no category/sector fields yet, so these filter
-    // chips are informational and do not restrict the grid.
+      return f.clients.includes(option);
     case "Category":
+      return f.categories.includes(option);
     case "Sector":
-      return true;
+      return f.sectors.includes(option);
   }
 }
 

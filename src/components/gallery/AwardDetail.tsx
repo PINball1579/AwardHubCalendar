@@ -35,7 +35,7 @@ export function AwardDetail({ entry }: AwardDetailProps) {
       <h1 className="font-normal leading-normal text-white text-[44px] sm:text-[80px]">
         {entry.title}
       </h1>
-      <p className="mt-2 font-normal uppercase leading-normal text-white text-[16px] sm:text-[24px]">
+      <p className="mt-2 font-normal leading-normal text-white text-[16px] sm:text-[24px]">
         {entry.agency} / {entry.client} / {entry.year}
       </p>
       {/* trophy chips ordered like the Entries table: Grand Prix > Gold >
@@ -48,7 +48,7 @@ export function AwardDetail({ entry }: AwardDetailProps) {
           ))}
       </div>
 
-      <hr className="my-6 rule-faint" />
+      <hr className="my-10 rule-faint" />
 
       {/* media slider — banner still, then supporting photos, then videos */}
       <div className="relative aspect-[1062/709] w-full overflow-hidden bg-black">
@@ -71,19 +71,22 @@ export function AwardDetail({ entry }: AwardDetailProps) {
         )}
       </div>
 
-      {/* control bar — Figma: Download pill left, chevrons, divider line,
-          large slide counter right */}
+      {/* control bar — Figma: squared gold Download button (with download
+          icon), chevrons, divider line, large slide counter right */}
       <div className="mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
         <a
           href={entry.downloadUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-9 items-center gap-2 rounded-full border border-ink-600 px-5 font-normal leading-normal text-white text-[14px] sm:text-[16px] hover:border-cave-gold hover:text-cave-gold"
+          className="inline-flex h-9 items-center justify-center gap-6 rounded-[4px] border border-cave-golddim px-4 font-medium leading-normal text-white text-[16px] transition-colors hover:border-cave-gold sm:text-[18px]"
         >
           Download
-          <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4 fill-current">
-            <path d="M8 1v9.2L4.6 6.8 3.4 8 8 12.6 12.6 8l-1.2-1.2L8 10.2V1H8zM2 14h12v1.5H2z" />
-          </svg>
+          <img
+            src="/images/download-icon.svg"
+            alt=""
+            aria-hidden="true"
+            className="h-4 w-4"
+          />
         </a>
 
         <div className="ml-auto flex items-center gap-4 sm:ml-16">
@@ -118,7 +121,7 @@ export function AwardDetail({ entry }: AwardDetailProps) {
       </div>
 
       {/* tabs */}
-      <div className="mt-6 grid grid-cols-3 overflow-hidden rounded-full border border-ink-700">
+      <div className="mt-6 grid grid-cols-3 overflow-hidden rounded-full border border-[#9D833E]">
         {TABS.map((t) => (
           <button
             key={t}

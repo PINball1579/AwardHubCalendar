@@ -57,7 +57,7 @@ export function MiniCalendar() {
           <button onClick={() => shift(-1)} aria-label="Previous month" className="hover:text-cave-gold">
             ‹
           </button>
-          <span className="w-24 text-center font-medium text-white text-[14px] sm:text-[16px]">
+          <span className="text-center font-medium text-white text-[14px] sm:text-[16px]">
             {monthLabel(year, month0)}
           </span>
           <button onClick={() => shift(1)} aria-label="Next month" className="hover:text-cave-gold">

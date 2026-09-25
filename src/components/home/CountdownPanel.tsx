@@ -50,57 +50,56 @@ export function CountdownPanel({ deadline }: CountdownPanelProps) {
   ];
 
   return (
-    <div className="space-y-5">
-      <div className="rounded-md border border-cave-golddim px-4 py-3 text-center font-bold leading-normal text-white text-[15px] sm:text-[16px]">
+    <div className="overflow-hidden rounded-lg border border-cave-golddim">
+      <div className="border-b border-cave-golddim px-4 py-5 text-center font-bold leading-normal text-white text-[15px] sm:text-[16px]">
         Countdown to Next Submission Deadline
       </div>
 
-      <div className="flex justify-between px-2">
-        {units.map(([value, label]) => (
-          <div key={label} className="text-center">
-            <div className="font-bold tabular-nums leading-normal text-cave-gold text-[44px] sm:text-[54px]">
-              {value === undefined ? "––" : String(value).padStart(2, "0")}
-            </div>
-            <div className="font-normal leading-normal text-white text-[12px] sm:text-[13px]">
-              {label}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div>
-        <h3 className="mb-3 font-bold leading-normal text-white text-[16px]">
-          Awards Deadline &amp; Calendar
-        </h3>
-        <ul className="space-y-2">
-          {DEADLINE_ITEMS.map((item) => (
-            <li
-              key={item.title}
-              className="flex items-center gap-3 rounded-md border border-ink-800 bg-ink-900 p-2"
-            >
-              <div
-                className={`flex h-[60px] w-[60px] flex-col items-center justify-center text-white ${
-                  item.color === "pink" ? "bg-cave-badgePink" : "bg-cave-badgePurple"
-                }`}
-              >
-                <span className="font-normal leading-normal text-[14px]">
-                  {item.month}
-                </span>
-                <span className="font-bold leading-normal text-[24px]">
-                  {item.day}
-                </span>
+      <div className="px-6 py-8">
+        <div className="flex justify-between">
+          {units.map(([value, label]) => (
+            <div key={label} className="text-center">
+              <div className="font-bold tabular-nums leading-normal text-cave-golddim text-[44px] sm:text-[54px]">
+                {value === undefined ? "––" : String(value).padStart(2, "0")}
               </div>
-              <div>
-                <div className="font-normal leading-normal text-white text-[16px]">
-                  {item.title}
-                </div>
-                <div className="font-normal leading-normal text-[10px] text-[#a1a1a1]">
-                  {item.note}
-                </div>
+              <div className="font-normal leading-normal text-white text-[12px] sm:text-[13px]">
+                {label}
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
+
+        <div className="mt-8">
+          <h3 className="mb-4 font-bold leading-normal text-white text-[16px]">
+            Awards Deadline &amp; Calendar
+          </h3>
+          <ul className="space-y-4">
+            {DEADLINE_ITEMS.map((item) => (
+              <li key={item.title} className="flex items-center gap-3">
+                <div
+                  className={`flex h-[60px] w-[60px] flex-shrink-0 flex-col items-center justify-center text-white ${
+                    item.color === "pink" ? "bg-cave-badgePink" : "bg-cave-badgePurple"
+                  }`}
+                >
+                  <span className="font-normal leading-none text-[16px]">
+                    {item.month}
+                  </span>
+                  <span className="font-bold leading-none text-[27px]">
+                    {item.day}
+                  </span>
+                </div>
+                <div>
+                  <div className="font-normal leading-normal text-white text-[16px]">
+                    {item.title}
+                  </div>
+                  <div className="font-normal leading-normal text-[10px] text-[#a1a1a1]">
+                    {item.note}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

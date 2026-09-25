@@ -236,6 +236,7 @@ export const AWARD_ORGS: AwardOrg[] = [
     entryKitUrl: "/entry-kits/mma-smarties-x-global.pdf",
     logo: "/images/awards/mma-smarties-x-global.webp",
     logoBg: "linear-gradient(90deg,#500f79,#2d0860)",
+    logoBleed: true,
   },
   {
     id: "mandm-global-awards",

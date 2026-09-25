@@ -176,7 +176,7 @@ export function CalendarPage() {
 
       {/* month grid — shown once the current month resolves after mount */}
       {!mounted ? (
-        <div className="mt-5 h-[760px] rounded-md border border-cave-golddim/60" />
+        <div className="mt-5 h-[900px] border border-cave-golddim/60" />
       ) : (
       <div className="mt-5 -mx-6 overflow-x-auto px-6 sm:mx-0 sm:px-0">
         {/* Figma: gold grid lines, square corners, cells taller than wide */}
@@ -197,13 +197,13 @@ export function CalendarPage() {
               <button
                 key={key}
                 onClick={() => setSelected(key)}
-                className={`min-h-[120px] border-b border-r border-cave-golddim p-2 text-left align-top transition-colors hover:bg-ink-900/60 sm:min-h-[140px] ${
+                className={`relative min-h-[150px] border-b border-r border-cave-golddim text-left transition-colors hover:bg-ink-900/40 sm:min-h-[230px] ${
                   selected === key ? "ring-1 ring-inset ring-cave-gold/60" : ""
                 }`}
               >
-                {/* gold circle marks today */}
+                {/* date number, top-left (gold circle marks today) */}
                 <div
-                  className={`inline-flex h-7 w-7 items-center justify-center font-medium leading-normal text-[13px] sm:text-[14px] ${
+                  className={`absolute left-3 top-3 inline-flex h-7 w-7 items-center justify-center font-medium leading-normal text-[13px] sm:text-[14px] ${
                     key === todayKey
                       ? "rounded-full bg-cave-gold text-ink-950"
                       : inMonth
@@ -213,16 +213,19 @@ export function CalendarPage() {
                 >
                   {String(d.getUTCDate()).padStart(2, "0")}
                 </div>
-                <div className="mt-1 space-y-1">
-                  {dayEvents.map((e) => (
-                    <div
-                      key={e.id}
-                      className={`truncate rounded-sm px-1.5 py-1 text-center font-normal leading-normal text-[12px] ${CHIP_COLOR_CLASS[e.color]}`}
-                    >
-                      {e.title}
-                    </div>
-                  ))}
-                </div>
+                {/* event tag(s): full-cell-width bar, vertically centered */}
+                {dayEvents.length > 0 && (
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 space-y-1">
+                    {dayEvents.map((e) => (
+                      <div
+                        key={e.id}
+                        className={`flex h-9 w-full items-center justify-center px-2 text-center font-normal leading-tight text-white text-[13px] sm:text-[15px] ${CHIP_COLOR_CLASS[e.color]}`}
+                      >
+                        <span className="truncate">{e.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </button>
             );
           })}

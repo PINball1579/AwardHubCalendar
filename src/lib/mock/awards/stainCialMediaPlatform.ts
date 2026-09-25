@@ -5,16 +5,25 @@ import { credits } from "./helpers";
 export const STAIN_CIAL_MEDIA_PLATFORM: AwardEntry = {
   slug: "the-stain-cial-media-platform",
   title: "The Stain-cial Media Platform",
-  agency: "Brilliant & Million, Bangkok / Spark Foundry",
+  agency: "Brilliant & Million | Spark Foundry",
   client: "Breeze",
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-stain-cial-media-platform.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393196554160",
+    "https://lion.box.com/s/z5vr9ae9bxm1n20pigilg0sozamyww4x",
+  filters: {
+    awards: ["Campaign Asia - Media Awards"],
+    agencies: ["Spark Foundry (PUBM_SP)", "Brilliant & Million (BM)"],
+    clients: ["Breeze"],
+    trophies: ["Silver"],
+    categories: ["Media"],
+    sectors: ["FMCG & Household Products"],
+    years: [2026],
+  },
   accent: "cyan",
   trophies: [
-    { label: "1 Gold Campaign Asia - Media Awards", tier: "gold" },
+    { label: "1 Silver Campaign Asia - Media Awards", tier: "silver" },
   ],
   stats: [
     { value: "7.6M", label: "Users reached" },
@@ -45,7 +54,7 @@ export const STAIN_CIAL_MEDIA_PLATFORM: AwardEntry = {
     },
   ],
   entries: [
-    { year: 2026, name: "AI-Powered - Breeze for Every Stain", category: "Media", subCategory: "Best Use of AI in Media", awards: "Campaign Asia - Media Awards", prize: "Gold", prizeTier: "gold" },
+    { year: 2026, name: "AI-Powered - Breeze for Every Stain", category: "Media", subCategory: "Best Use of AI in Media", awards: "Campaign Asia - Media Awards", prize: "Silver", prizeTier: "silver" },
   ],
   companyCredits: [],
   peopleCredits: credits(

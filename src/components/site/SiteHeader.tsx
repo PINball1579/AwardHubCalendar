@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { href: "/gallery", label: "Gallery" },
   { href: "/calendar", label: "Calendar" },
   { href: "/awards-info", label: "Awards Info" },
-  { href: "/submission", label: "Awards Submission" },
 ];
 
 export function SiteHeader() {
@@ -22,23 +21,23 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-ink-800/70 bg-ink-950/85 backdrop-blur">
-      <div className="cave-container flex h-16 items-center justify-between gap-6">
+      <div className="cave-container flex h-16 items-center gap-6">
         <Link
           href="/"
-          className="flex items-center"
+          className="flex shrink-0 items-center"
           onClick={() => setOpen(false)}
         >
-          <BrandLockup height={26} tone="gold" />
+          <BrandLockup height={40} tone="gold" />
         </Link>
 
-        {/* desktop nav */}
-        <nav className="hidden items-center gap-8 md:flex">
+        {/* desktop nav — Figma: links spread across the width, all white 12px */}
+        <nav className="hidden flex-1 items-center justify-evenly md:flex">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-[12px] font-normal uppercase leading-normal transition-colors ${
-                isActive(link.href) ? "text-white" : "text-muted hover:text-zinc-200"
+              className={`text-[12px] font-normal uppercase leading-normal transition-colors hover:text-cave-gold ${
+                isActive(link.href) ? "text-cave-gold" : "text-white"
               }`}
             >
               {link.label}
@@ -46,7 +45,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-3">
           <div className="hidden md:block">
             <HeaderAuth />
           </div>
@@ -90,7 +89,7 @@ export function SiteHeader() {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`border-b border-ink-800/60 py-3 text-[13px] font-normal uppercase leading-normal ${
-                  isActive(link.href) ? "text-white" : "text-muted"
+                  isActive(link.href) ? "text-cave-gold" : "text-white"
                 }`}
               >
                 {link.label}

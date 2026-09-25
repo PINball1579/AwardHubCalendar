@@ -1,18 +1,28 @@
 import type { AwardEntry } from "../types";
+import { credits } from "./helpers";
 
 /** Figma page 3.8 AWARDS DETAIL - WHERE AI MEETS CONTEXT */
 export const WHERE_AI_MEETS_CONTEXT: AwardEntry = {
   slug: "where-ai-meets-context",
   title: "Where AI Meets Context: Reinventing Media That Converts",
-  agency: "Spark",
+  agency: "Spark Foundry",
   client: "Vaseline",
   year: 2026,
   location: "Thailand",
   image: "/images/details/where-ai-meets-context.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393197166505",
+    "https://lion.box.com/s/qfak8owsgvwhppg2ge94jpc4vwnfaht7",
+  filters: {
+    awards: ["Campaign Asia - Media Awards"],
+    agencies: ["Spark Foundry (PUBM_SP)"],
+    clients: ["Vaseline"],
+    trophies: ["Gold"],
+    categories: ["Media"],
+    sectors: ["FMCG & Household Products"],
+    years: [2026],
+  },
   accent: "cyan",
-  trophies: [{ label: "1 Shortlisted Campaign Asia", tier: "finalist" }],
+  trophies: [{ label: "1 Gold Campaign Asia - Media Awards", tier: "gold" }],
   stats: [
     { value: "+20%", label: "Sales" },
     { value: "-93%", label: "Cost/visit" },
@@ -42,8 +52,22 @@ export const WHERE_AI_MEETS_CONTEXT: AwardEntry = {
     },
   ],
   entries: [
-    { year: 2026, name: "Where AI Meets Context: Reinventing Media That Converts", category: "Best Use of AI in Media", subCategory: "M04", awards: "Campaign Asia - Media Awards", prize: "Shortlisted", prizeTier: "finalist" },
+    { year: 2026, name: "Where AI Meets Context: Reinventing Media That Converts", category: "Media", subCategory: "Best Use of AI in Media", awards: "Campaign Asia - Media Awards", prize: "Gold", prizeTier: "gold" },
   ],
-  companyCredits: [],
-  peopleCredits: [],
+  companyCredits: credits(
+    ["Leo Bangkok", "Factory01", "Factory01"],
+    ["Bangkok, Thailand", "Bangkok, Thailand", "Bangkok, Thailand"],
+    ["Creative Agency", "Production", "Post-Production"],
+  ),
+  peopleCredits: credits(
+    [
+      "Prasert Vijitpawan", "Sarut Yungcharoen", "Kittinat Prasomsap", "Prasert Vijitpawan", "Sarita Virunechavee", "Kaewkraw Komonwiwat", "Rungrudee Chinpratan", "Sorada Sonprasit", "Samira Thancharoenkit", "Rathawan Sukanake", "Naphat Chiangrat", "Suthikarn Saeju", "Ing-tarn Ruckpanich", "Doungjai Sawasdee Moyon", "Puree Preyaprawat", "Judprakai Sirirattanasuk", "Kittisak Waransittichai", "Wuthisak Anarnkaporn", "Mattanee Uajaremsup", "Wityawat Lakam", "Rungtawan Nanthasaen", "Sawanya Jumchart", "Boonsita Limprasert", "Abhisit Prasongsub", "Wanlop Plumsee", "Thida Rosthip", "Pornthip Mutisom", "Nisakorn Ngaosri", "Wipawee Khirirat", "Chaleamchon Natipat", "Tuchtram Thientawach", "Nantachai Sammaphutti", "Artit Vongmetta", "The Sharpen",
+    ],
+    [
+      "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Publicis Groupe Thailand", "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Leo Bangkok", "Publicis Groupe", "Leo Bangkok", "Leo Bangkok", "IPG Mediabrands Thailand", "IPG Mediabrands Thailand", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Factory01", "Freelance", "Freelance", "Onecool Production", "Mellowtunes", "The Sharpen",
+    ],
+    [
+      "Chief Creative Officer", "Executive Creative Director", "Associate Creative Director", "Copy Writer", "Senior Art Director", "Art Director", "Producer", "Chief Executive Officer", "Managing Director", "Account Management Director", "Account Director", "Account Manager", "Awards Management Executive", "Head of Strategic Planning", "Strategic Planner", "Business Group Head", "Digital Director", "Director", "Assistant Director", "Assistant Director", "Executive Producer", "Producer", "Production Manager", "Director of Photography", "Art Director", "Stylist", "Casting", "Location Manager", "Post Producer", "Editor", "Colorist", "VTR Online", "Audio Mix", "CG Studio",
+    ],
+  ),
 };

@@ -23,32 +23,57 @@ export function OverviewTab({ entry }: { entry: AwardEntry }) {
   );
 }
 
+/**
+ * Column separator, per the Figma entries row: a 1px white rule inset from the
+ * row's horizontal rules so it never touches them (Figma leaves ~16px of the
+ * 80px row clear at each end). Applied to every column but the first.
+ */
+const ENTRY_DIVIDER =
+  "relative before:absolute before:inset-y-3 before:left-0 before:w-px before:bg-white before:content-['']";
+
+/** Longest prize label that still fits the standard one-line chip. */
+const WRAPPED_PRIZE_MAX_LENGTH = 12;
+
 export function EntriesTab({ entry }: { entry: AwardEntry }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[760px] border-collapse">
         <thead>
-          <tr className="border-b border-ink-700 text-left font-medium leading-normal text-white text-[13px] sm:text-[14px]">
+          <tr className="border-b-2 border-white text-left font-medium leading-normal text-white text-[13px] sm:text-[14px]">
             <th className="py-2 pr-4 font-medium">Year</th>
-            <th className="py-2 pr-4 font-medium">Name</th>
-            <th className="py-2 pr-4 font-medium">Category</th>
-            <th className="py-2 pr-4 font-medium">Sub-Category</th>
-            <th className="py-2 pr-4 font-medium">Awards</th>
-            <th className="py-2 pr-4 font-medium">Prize</th>
+            <th className="py-2 pl-4 pr-4 font-medium">Name</th>
+            <th className="py-2 pl-4 pr-4 font-medium">Category</th>
+            <th className="py-2 pl-4 pr-4 font-medium">Sub-Category</th>
+            <th className="py-2 pl-4 pr-4 font-medium">Awards</th>
+            <th className="py-2 pl-4 pr-4 text-center font-medium">Trophy</th>
           </tr>
         </thead>
         <tbody className="font-normal leading-normal text-white text-[13px] sm:text-[14px]">
           {[...entry.entries]
             .sort((a, b) => prizeRank(a.prize) - prizeRank(b.prize))
             .map((row, i) => (
-              <tr key={i} className="border-b border-ink-800/70">
-                <td className="py-3 pr-4">{row.year}</td>
-                <td className="py-3 pr-4">{row.name}</td>
-                <td className="py-3 pr-4">{row.category}</td>
-                <td className="py-3 pr-4">{row.subCategory}</td>
-                <td className="py-3 pr-4">{row.awards}</td>
-                <td className="py-3 pr-4">
-                  <PrizeChip label={row.prize} size="sm" />
+              // Figma holds every row at a fixed two-line height (80px at its
+              // 16px type) whether the content wraps or not, which is what makes
+              // the top alignment read on single-line rows.
+              <tr key={i} className="h-16 border-b-2 border-white">
+                <td className="py-3 pr-4 align-top">{row.year}</td>
+                <td className={`py-3 pl-4 pr-4 align-top ${ENTRY_DIVIDER}`}>{row.name}</td>
+                <td className={`py-3 pl-4 pr-4 align-top ${ENTRY_DIVIDER}`}>{row.category}</td>
+                <td className={`py-3 pl-4 pr-4 align-top ${ENTRY_DIVIDER}`}>{row.subCategory}</td>
+                <td className={`py-3 pl-4 pr-4 align-top ${ENTRY_DIVIDER}`}>{row.awards}</td>
+                <td className={`py-3 pl-4 pr-4 text-center align-top ${ENTRY_DIVIDER}`}>
+                  <PrizeChip
+                    label={row.prize}
+                    size="sm"
+                    className={`justify-center ${
+                      // Figma's chip hugs its label: a fixed 96x24 box on one
+                      // line, or — when the label wraps — a box only ~5px wider
+                      // than the text with no vertical padding at all.
+                      row.prize.length > WRAPPED_PRIZE_MAX_LENGTH
+                        ? "max-w-32 px-1.5"
+                        : "h-6 w-24"
+                    }`}
+                  />
                 </td>
               </tr>
             ))}
@@ -62,28 +87,30 @@ function CreditTable({
   title,
   rows,
   headerClass,
+  columnLabels,
 }: {
   title: string;
   rows: AwardEntry["companyCredits"];
   headerClass: string;
+  columnLabels: [string, string, string];
 }) {
   return (
     <div>
       <h3 className="mb-3 font-bold leading-normal text-white text-[18px]">{title}</h3>
-      <table className="w-full min-w-[640px] border-collapse">
+      <table className="w-full min-w-[640px] table-fixed border-collapse">
         <thead>
           <tr className={`text-left font-medium leading-normal text-white text-[13px] sm:text-[14px] ${headerClass}`}>
-            <th className="px-3 py-2 font-medium">Company</th>
-            <th className="px-3 py-2 font-medium">Location</th>
-            <th className="px-3 py-2 font-medium">Role</th>
+            <th className="w-1/3 px-3 py-2 font-medium">{columnLabels[0]}</th>
+            <th className="w-1/3 px-3 py-2 font-medium">{columnLabels[1]}</th>
+            <th className="w-1/3 px-3 py-2 font-medium">{columnLabels[2]}</th>
           </tr>
         </thead>
         <tbody className="font-normal leading-normal text-white text-[13px] sm:text-[14px]">
           {rows.map((row, i) => (
             <tr key={i} className="border-b border-ink-800/70">
-              <td className="px-3 py-2.5">{row.company}</td>
-              <td className="px-3 py-2.5">{row.location}</td>
-              <td className="px-3 py-2.5">{row.role}</td>
+              <td className="w-1/3 px-3 py-2.5">{row.company}</td>
+              <td className="w-1/3 px-3 py-2.5">{row.location}</td>
+              <td className="w-1/3 px-3 py-2.5">{row.role}</td>
             </tr>
           ))}
         </tbody>
@@ -100,6 +127,7 @@ export function CreditsTab({ entry }: { entry: AwardEntry }) {
           title="Company"
           rows={entry.companyCredits}
           headerClass="bg-cave-magenta"
+          columnLabels={["Company", "Location", "Role"]}
         />
       )}
       {entry.peopleCredits.length > 0 && (
@@ -107,6 +135,7 @@ export function CreditsTab({ entry }: { entry: AwardEntry }) {
           title="People"
           rows={entry.peopleCredits}
           headerClass="bg-cave-violet"
+          columnLabels={["Name", "Company", "Role"]}
         />
       )}
     </div>

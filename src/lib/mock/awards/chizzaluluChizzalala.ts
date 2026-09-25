@@ -5,13 +5,22 @@ import { credits } from "./helpers";
 export const CHIZZALULU_CHIZZALALA: AwardEntry = {
   slug: "chizzalulu-chizzalala",
   title: "Chizzalulu Chizzalala",
-  agency: "Publicis Thailand, Bangkok",
+  agency: "Publicis Thailand",
   client: "KFC",
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/chizzalulu-chizzalala.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393196499879",
+    "https://lion.box.com/s/h5l3aa6xmyf88l4k6ut6krke35feqp4e",
+  filters: {
+    awards: ["Gerety Awards", "New York Festivals Advertising", "Adfest"],
+    agencies: ["Publicis Thailand (PUB)"],
+    clients: ["KFC"],
+    trophies: ["Silver", "Shortlisted"],
+    categories: ["Entertainment", "Others"],
+    sectors: ["Food & Beverage"],
+    years: [2026],
+  },
   accent: "amber",
   trophies: [
     { label: "1 Silver ADFEST", tier: "silver" },

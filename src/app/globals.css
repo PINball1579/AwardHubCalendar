@@ -52,7 +52,7 @@
 
   /* Thin divider used under section headers */
   .rule-faint {
-    @apply border-t border-ink-700;
+    @apply border-t border-[#9D833E];
   }
 
   /* Legacy button kept for any remaining inline usage */

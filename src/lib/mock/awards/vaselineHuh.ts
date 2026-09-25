@@ -5,20 +5,38 @@ import { credits } from "./helpers";
 export const VASELINE_HUH: AwardEntry = {
   slug: "vaseline-huh",
   title: "Vaseline Huh",
-  agency: "Brilliant & Million, Bangkok",
+  agency: "Brilliant & Million",
   client: "Vaseline",
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/vaseline-huh.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393198026262",
+    "https://lion.box.com/s/ineikj6ux43hrh5swrtoljwdvcqn6azn",
+  filters: {
+    awards: [
+      "Adfest",
+      "Campaign Asia - Media Awards",
+      "Spikes Asia",
+      "White Square Festival",
+      "Festival of Media APAC",
+      "Mad Stars",
+    ],
+    agencies: ["Brilliant & Million (BM)", "Spark Foundry (PUBM_SP)"],
+    clients: ["Vaseline"],
+    trophies: ["Gold", "Silver", "Bronze", "Shortlisted"],
+    categories: ["PR", "Entertainment", "Media", "Social / Creator & Influencer"],
+    sectors: ["FMCG & Household Products"],
+    years: [2026],
+  },
   accent: "rose",
   trophies: [
     { label: "1 Gold Campaign Asia - Media Awards", tier: "gold" },
-    { label: "2 Silver ADFEST", tier: "silver" },
+    { label: "2 Silver Adfest", tier: "silver" },
     { label: "1 Silver White Square Festival", tier: "silver" },
     { label: "2 Bronze White Square Festival", tier: "bronze" },
     { label: "1 Bronze Festival of Media APAC", tier: "bronze" },
+    { label: "2 Shortlisted Spikes Asia", tier: "finalist" },
+    { label: "1 Shortlisted Mad Stars", tier: "finalist" },
   ],
   stats: [
     { value: "14M", label: "Engagements" },
@@ -46,14 +64,24 @@ export const VASELINE_HUH: AwardEntry = {
   ],
   entries: [
     { year: 2026, name: "Vaseline Huh?", category: "Media", subCategory: "Best Branded Content", awards: "Campaign Asia - Media Awards", prize: "Gold", prizeTier: "gold" },
-    { year: 2026, name: "Vaseline Huh?", category: "PR Lotus", subCategory: "Use of Social", awards: "ADFEST", prize: "Silver", prizeTier: "silver" },
-    { year: 2026, name: "Vaseline Huh?", category: "Entertainment Lotus", subCategory: "Brand Integration, Partnership & Collaborations", awards: "ADFEST", prize: "Silver", prizeTier: "silver" },
-    { year: 2026, name: "Vaseline Huh?", category: "Media", subCategory: "Best Use of Real-Time Marketing", awards: "Festival of Media APAC", prize: "Bronze", prizeTier: "bronze" },
+    { year: 2026, name: "Vaseline Huh?", category: "PR", subCategory: "Use of Social", awards: "Adfest", prize: "Silver", prizeTier: "silver" },
+    { year: 2026, name: "Vaseline Huh?", category: "Entertainment", subCategory: "Brand Integration, Partnership & Collaborations", awards: "Adfest", prize: "Silver", prizeTier: "silver" },
     { year: 2026, name: "Vaseline Huh?", category: "PR", subCategory: "Real-time Response", awards: "White Square Festival", prize: "Silver", prizeTier: "silver" },
     { year: 2026, name: "Vaseline Huh?", category: "PR", subCategory: "Sponsorship & Brand Partnership", awards: "White Square Festival", prize: "Bronze", prizeTier: "bronze" },
-    { year: 2026, name: "Vaseline Huh?", category: "Social & Influencer", subCategory: "Real-time Response", awards: "White Square Festival", prize: "Bronze", prizeTier: "bronze" },
+    { year: 2026, name: "Vaseline Huh?", category: "Media", subCategory: "Best Use of Real-Time Marketing", awards: "Festival of Media APAC", prize: "Bronze", prizeTier: "bronze" },
+    { year: 2026, name: "Vaseline Huh?", category: "Social / Creator & Influrencer", subCategory: "Real-time Response", awards: "White Square Festival", prize: "Bronze", prizeTier: "bronze" },
+    { year: 2026, name: "Vaseline Huh?", category: "PR", subCategory: "Social Engagement & Influencer Marketing: Real-time Response", awards: "Spikes Asia", prize: "Shortlisted", prizeTier: "finalist" },
+    { year: 2026, name: "Vaseline Huh?", category: "Entertainment", subCategory: "Partnerships: Brand Partnerships, Sponsorships & Collaborations", awards: "Spikes Asia", prize: "Shortlisted", prizeTier: "finalist" },
+    { year: 2026, name: "Vaseline Huh?", category: "PR", subCategory: "Practices & Specialism: Crisis Communications & Issue Management", awards: "Mad Stars", prize: "Shortlisted", prizeTier: "finalist" },
   ],
-  companyCredits: [],
+  // Figma's Company table only fills in the Creative Agency row; Production
+  // and Post-Production list literal "XXXXXXXX" placeholder text, so those
+  // two rows are left out rather than shipping unresolved filler copy.
+  companyCredits: credits(
+    ["Brilliant & Million"],
+    ["Bangkok, Thailand"],
+    ["Creative Agency"],
+  ),
   peopleCredits: credits(
     [
       "Wutcharapon Putyon", "Suweeraya Supaprasert", "Thanakorn Patomsakorn", "Suchalita Pawaranchanaphong", "Phurich Buphasiri", "Titipun Tubthong", "Kaiwan Teanngam", "Suttirak Thongdam", "Chidchanok Nilrat", "Athiporn Sutthising", "Phollawat Wattanasomsiri", "Megan Salisar G. Nielsen", "Witthawas Suknantee", "Apinya Kamkemkeaw", "Varat Sittinuntawat", "Vibhu Harnvarakiat", "Saharat Narukatpichai", "Sittikorn Supapontaworn", "Nisofia Kuji", "Witarinee Nitiwanakun", "Nonglak Achawaporn", "Nuttha Sakidjai", "Kanokrat Bovorn", "Ajchara Thaithaporn", "Jakrawut Wonglertpichit", "Wasinee Korntubtim", "Taksaporn Srisawang", "Sorada Sornprasit", "Thanaporn Chankitmunkong", "Titipun Tubthong",

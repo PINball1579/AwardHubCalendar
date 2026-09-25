@@ -53,6 +53,19 @@ export interface AwardEntry {
   peopleCredits: CreditRow[];
   /** Box folder the Download button opens (entry-kit assets). */
   downloadUrl: string;
+  /** Values this work matches in the gallery filters (from the winners table). */
+  filters: AwardFilters;
+}
+
+/** The distinct filter values a work is tagged with (drives the gallery filters). */
+export interface AwardFilters {
+  awards: string[];
+  agencies: string[];
+  clients: string[];
+  trophies: string[];
+  categories: string[];
+  sectors: string[];
+  years: number[];
 }
 
 export interface FeaturedWork {
@@ -101,4 +114,6 @@ export interface AwardOrg {
   logo?: string;
   /** logo tile background (some logos sit on a colored field) */
   logoBg?: string;
+  /** logo bleeds to the tile edge with no inset, per the Figma tile */
+  logoBleed?: boolean;
 }

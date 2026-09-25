@@ -5,13 +5,22 @@ import { credits } from "./helpers";
 export const THE_UNFLUENCER: AwardEntry = {
   slug: "the-unfluencer",
   title: "The Unfluencer",
-  agency: "Publicis Thailand, Bangkok",
+  agency: "Publicis Thailand",
   client: "KFC",
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/the-unfluencer.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393197423945",
+    "https://lion.box.com/s/nunbl9u7v4cqkx40sk2p4i24j0jihkdp",
+  filters: {
+    awards: ["Spikes Asia", "Adfest"],
+    agencies: ["Publicis Thailand (PUB)"],
+    clients: ["KFC"],
+    trophies: ["Silver", "Bronze", "Shortlisted"],
+    categories: ["Social / Creator & Influencer", "Digital & Social", "Media"],
+    sectors: ["Food & Beverage"],
+    years: [2026],
+  },
   accent: "violet",
   trophies: [
     { label: "1 Bronze ADFEST", tier: "bronze" },

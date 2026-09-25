@@ -16,10 +16,10 @@ export function PrizeChip({ label, size = "md", className = "" }: PrizeChipProps
   const sizeClass =
     size === "md"
       ? "px-3 py-1 text-[14px] sm:text-[17px]"
-      : "px-2.5 py-1 text-[12px] sm:text-[13px]";
+      : "text-[12px] sm:text-[13px]";
   return (
     <span
-      className={`inline-flex items-center rounded-[3px] font-normal leading-normal text-white ${sizeClass} ${PRIZE_CHIP_CLASS[prizeKind(label)]} ${className}`}
+      className={`inline-flex items-center text-center font-normal leading-normal text-white ${sizeClass} ${PRIZE_CHIP_CLASS[prizeKind(label)]} ${className}`}
     >
       {label}
     </span>

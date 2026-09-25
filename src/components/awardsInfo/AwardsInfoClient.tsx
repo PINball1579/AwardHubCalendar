@@ -27,26 +27,34 @@ export function AwardsInfoClient() {
 
   return (
     <div className="cave-container py-10">
-      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
         <div>
           <h1 className="font-medium uppercase leading-normal text-white text-[34px] sm:text-[60px]">
             Gallery of Merit
           </h1>
-          <p className="mt-3 max-w-xl font-medium leading-normal text-white text-[16px] sm:text-[24px]">
+          <p className="mt-6 max-w-xl font-medium leading-normal text-white text-[16px] sm:text-[24px]">
             A digital curated exhibition of creative milestones and operational
             excellence across local and global stages.
           </p>
         </div>
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setPage(1);
-          }}
-          placeholder="Search award shows…"
-          className="h-11 w-full self-center mt-10 rounded-full border border-ink-700 bg-ink-850 px-4 text-sm text-zinc-100 placeholder:text-muted-faint focus:border-cave-gold focus:outline-none md:w-80"
-        />
+        <div className="relative w-full self-center md:mt-10 md:w-[411px]">
+          <img
+            src="/images/search-icon.svg"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2"
+          />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setPage(1);
+            }}
+            placeholder="Search award shows…"
+            className="h-[60px] w-full rounded-full bg-white pl-12 pr-4 text-sm text-ink-950 placeholder:text-muted focus:outline-none"
+          />
+        </div>
       </div>
 
       <div className="mt-8">

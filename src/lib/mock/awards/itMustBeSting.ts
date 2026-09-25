@@ -5,13 +5,22 @@ import { credits } from "./helpers";
 export const IT_MUST_BE_STING: AwardEntry = {
   slug: "it-must-be-sting",
   title: "It Must Be Sting",
-  agency: "Brilliant & Million, Bangkok",
+  agency: "Brilliant & Million | LEO Bangkok",
   client: "Sting",
   year: 2026,
   location: "Bangkok, Thailand",
   image: "/images/details/it-must-be-sting.webp",
   downloadUrl:
-    "https://lion.app.box.com/s/f6a1d5kcimwx4hdc1gb8actfc828b99o/folder/393195551168",
+    "https://lion.box.com/s/qmc1kg1id4y6qff1fplv3n8pa5817he7",
+  filters: {
+    awards: ["Adfest", "Cannes Lions", "Spikes Asia"],
+    agencies: ["Leo Bangkok (LBB)", "Brilliant & Million (BM)"],
+    clients: ["Sting"],
+    trophies: ["Bronze", "Shortlisted"],
+    categories: ["Digital & Social", "Film", "Social / Creator & Influencer"],
+    sectors: ["Food & Beverage"],
+    years: [2026],
+  },
   accent: "rose",
   trophies: [
     { label: "1 Bronze ADFEST", tier: "bronze" },

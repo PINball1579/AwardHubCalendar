@@ -33,12 +33,12 @@ export function FilterDropdown({
   align = "left",
 }: FilterDropdownProps) {
   return (
-    <div className="relative">
+    <div className="relative shrink-0">
       <button
         type="button"
         onClick={onToggleOpen}
         aria-expanded={open}
-        className="flex h-9 items-center justify-between gap-2 rounded-full border border-cave-golddim bg-black px-4 font-normal uppercase leading-normal text-white text-[12px]"
+        className="flex h-9 items-center justify-between gap-2 whitespace-nowrap rounded-full border border-cave-golddim bg-black px-4 font-normal uppercase leading-normal text-white text-[12px]"
       >
         {label}
         <img
