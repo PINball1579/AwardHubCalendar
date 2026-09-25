@@ -64,3 +64,16 @@ model DeltaCursor {
   deltaLink  String
   updatedAt  DateTime @updatedAt
 }
+
+/// Durable record of an accepted Graph change notification. Written before the
+/// webhook returns 202 so a crash between acknowledgement and sync cannot lose
+/// the change; the sync cycle marks rows processed once the delta has run.
+model NotificationQueue {
+  id             String    @id @default(cuid())
+  subscriptionId String?
+  changedIds     String[]
+  receivedAt     DateTime  @default(now())
+  processedAt    DateTime?
+
+  @@index([processedAt, receivedAt])
+}

@@ -6,7 +6,7 @@ their own Outlook calendar, kept in sync automatically.
 
 ## Prerequisites
 
-- Node 20+, PostgreSQL 14+
+- Node 20.9+ (Next.js 16), PostgreSQL 14+
 - An Entra ID app registration with **admin-consented application permissions**:
   - `Calendars.ReadWrite` (Application) — read awards@ + write user calendars
   - A client secret
@@ -35,6 +35,19 @@ set `PUBLIC_BASE_URL` to the public URL.
 > in use (e.g. another Postgres install), run your dev Postgres on a different
 > port and point `DATABASE_URL` at it. This development machine uses **5433**
 > for exactly this reason — see the gitignored `.env` / `.env.test`.
+
+## Security
+
+Hardening notes, and the Exchange/WAF configuration that must be applied
+outside the app, are in [SECURITY.md](./SECURITY.md). Two things to know before
+deploying:
+
+- **Demo mode cannot run in production.** The app refuses to start — including
+  `next build` — if `DEMO_MODE` or `NEXT_PUBLIC_DEMO_MODE` is `true` while
+  `NODE_ENV=production`. Unset them in every deployed environment.
+- **The Graph service principal must be scoped in Exchange.** The
+  `Calendars.ReadWrite` application permission reaches every mailbox in the
+  tenant until an `ApplicationAccessPolicy` narrows it.
 
 ## Tests
 

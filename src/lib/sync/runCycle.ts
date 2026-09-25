@@ -37,6 +37,13 @@ export async function runSyncCycle(): Promise<void> {
   const { PrismaEventStore } = await import("@/lib/sync/prismaEventStore");
   const { PrismaSubscriptionStore } = await import("@/lib/sync/prismaSubscriptionStore");
   const { getDeltaLink, saveDeltaLink } = await import("@/lib/sync/cursor");
+  const { pendingNotificationIds, markNotificationsProcessed } = await import(
+    "@/lib/sync/notificationQueue"
+  );
+
+  // Claim the queued deliveries *before* the delta runs, so notifications that
+  // arrive mid-cycle stay pending and are covered by the next one.
+  const claimed = await pendingNotificationIds();
 
   await runSyncCycleWith({
     gateway: new RealGateway(createGraphClient()),
@@ -45,4 +52,7 @@ export async function runSyncCycle(): Promise<void> {
     getDeltaLink,
     saveDeltaLink,
   });
+
+  // Only on success — a thrown cycle leaves the rows pending for a retry.
+  await markNotificationsProcessed(claimed);
 }
