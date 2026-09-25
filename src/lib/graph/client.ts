@@ -19,7 +19,7 @@ import { getConfig } from "@/lib/config";
  *   3. secret           — fallback, rotate on a schedule
  *
  * Whichever is used, the service principal must also be scoped to the awards
- * mailbox with an Exchange ApplicationAccessPolicy; see SECURITY.md.
+ * mailbox with an Exchange ApplicationAccessPolicy.
  */
 export function createGraphCredential(): TokenCredential {
   const { azure } = getConfig();

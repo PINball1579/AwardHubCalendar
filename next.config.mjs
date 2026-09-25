@@ -18,7 +18,7 @@ const isDev = process.env.NODE_ENV !== "production";
  * To upgrade to nonce + 'strict-dynamic' (which would also stop inline-script
  * injection), the page routes must opt into dynamic rendering
  * (`export const dynamic = "force-dynamic"`), then the nonce can be issued from
- * middleware. See SECURITY.md.
+ * middleware.
  */
 const csp = [
   "default-src 'self'",

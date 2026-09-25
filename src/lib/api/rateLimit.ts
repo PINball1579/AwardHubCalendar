@@ -3,7 +3,7 @@
  *
  * In-process only: it protects a single instance from a burst and is not a
  * substitute for an edge WAF / API-gateway limit, which is what stops a
- * distributed flood before it reaches the app. Run both — see SECURITY.md.
+ * distributed flood before it reaches the app. Run both.
  */
 
 interface Window {

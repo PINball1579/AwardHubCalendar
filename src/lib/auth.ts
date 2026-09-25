@@ -30,8 +30,9 @@ export type AccessDecision =
  *
  * Fails closed: if the group is configured but the token carries no usable
  * `groups` claim, access is denied rather than silently granted. That means the
- * "groups" optional claim MUST be enabled on the app registration — see
- * SECURITY.md.
+ * "groups" optional claim MUST be enabled on the app registration
+ * (Token configuration -> Add groups claim -> Groups assigned to the
+ * application), or every sign-in is refused.
  */
 export function decideAccess(
   profile: EntraProfile | undefined,

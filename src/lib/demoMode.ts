@@ -31,7 +31,7 @@ export function assertDemoModeAllowed(env: NodeJS.ProcessEnv = process.env): voi
   throw new Error(
     `Refusing to start: ${enabled.join(" and ")} enabled with NODE_ENV=production. ` +
       `Demo mode allows passwordless sign-in and must never run outside local development. ` +
-      `Unset ${enabled.join(" and ")} (see .env.example) and redeploy.`
+      `Unset ${enabled.join(" and ")} and redeploy.`
   );
 }
 

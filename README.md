@@ -16,12 +16,13 @@ their own Outlook calendar, kept in sync automatically.
 1. Register an app in Entra ID.
 2. Add application permission `Calendars.ReadWrite`, then **Grant admin consent**.
 3. Add a redirect URI `https://<host>/api/auth/callback/azure-ad` for user sign-in.
-4. Create a client secret; put values in `.env` (see `.env.example`).
+4. Create a client secret; put the values in `.env`. The required
+   variables are listed in the internal Award Hub setup guide.
 
 ## Local setup
 
 ```bash
-cp .env.example .env   # fill in values
+# create .env from the internal setup guide, then:
 createdb awardhub
 npx prisma migrate deploy
 npm run dev             # web app on :3000
@@ -39,8 +40,8 @@ set `PUBLIC_BASE_URL` to the public URL.
 ## Security
 
 Hardening notes, and the Exchange/WAF configuration that must be applied
-outside the app, are in [SECURITY.md](./SECURITY.md). Two things to know before
-deploying:
+outside the app, are held in the internal security documentation. Two things to
+know before deploying:
 
 - **Demo mode cannot run in production.** The app refuses to start — including
   `next build` — if `DEMO_MODE` or `NEXT_PUBLIC_DEMO_MODE` is `true` while
